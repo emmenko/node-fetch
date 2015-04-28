@@ -64,20 +64,23 @@ function Fetch(url, opts) {
 
 		// avoid side-effect on input options
 		var options = {
-			hostname: uri.hostname
-			, port: uri.port
-			, path: uri.path
-			, auth: uri.auth
-			, method: opts.method || 'GET'
-			, headers: opts.headers || {}
-			, follow: opts.follow !== undefined ? opts.follow : 20
-			, counter: opts.counter || 0
-			, timeout: opts.timeout || 0
-			, compress: opts.compress !== false
-			, size: opts.size || 0
+			method: 'GET'
+			, headers: {}
+			, follow: 20
+			, counter: 0
+			, timeout: 0
+			//, compress: opts.compress !== false
+			, size: 0
 			, body: opts.body
 			, agent: opts.agent
 		};
+
+    require('util')._extend(options, opts, {
+      hostname: uri.hostname
+      , port: uri.port
+      , path: uri.path
+      , auth: uri.auth
+    })
 
 		// normalize headers
 		var headers = new Headers(options.headers);
