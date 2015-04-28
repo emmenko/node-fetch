@@ -7,6 +7,7 @@
 
 var parse_url = require('url').parse;
 var resolve_url = require('url').resolve;
+var _extend = require('util')._extend;
 var http = require('http');
 var https = require('https');
 var zlib = require('zlib');
@@ -75,12 +76,13 @@ function Fetch(url, opts) {
 			, agent: opts.agent
 		};
 
-    require('util')._extend(options, opts, {
+    _extend(options, opts);
+    _extend(options, {
       hostname: uri.hostname
       , port: uri.port
       , path: uri.path
       , auth: uri.auth
-    })
+    });
 
 		// normalize headers
 		var headers = new Headers(options.headers);
